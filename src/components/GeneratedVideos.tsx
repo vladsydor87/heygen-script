@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import { supabase } from "@/integrations/supabase/client";
@@ -45,11 +46,14 @@ const GeneratedVideos = () => {
                     ) : (
                         <div className="grid grid-cols-3 auto-rows-[200px] gap-4">
                             {videoQuery.data.map(
-                                (item: {
-                                    status: string;
-                                    video_url: string;
-                                }) => (
-                                    <>
+                                (
+                                    item: {
+                                        status: string;
+                                        video_url: string;
+                                    },
+                                    index
+                                ) => (
+                                    <Fragment key={index}>
                                         {item.status === "processing" ? (
                                             <div className="rounded w-full h-full bg-white/50 animate-pulse flex items-center justify-center">
                                                 <p className="text-black/60">
@@ -57,7 +61,7 @@ const GeneratedVideos = () => {
                                                 </p>
                                             </div>
                                         ) : item.status === "completed" ? (
-                                            <div className="relative w-full h-full">
+                                            <div className="relative flex items-center justify-center w-full h-full">
                                                 <video
                                                     src={item.video_url || ""}
                                                     className="rounded w-full"
@@ -65,7 +69,7 @@ const GeneratedVideos = () => {
                                                 ></video>
                                             </div>
                                         ) : null}
-                                    </>
+                                    </Fragment>
                                 )
                             )}
                         </div>

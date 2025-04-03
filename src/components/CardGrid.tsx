@@ -54,9 +54,9 @@ const generateVoice = async ({ avatar_id, voice_id, script }) => {
     try {
         const { error } = await supabase.functions.invoke("create-video", {
             body: JSON.stringify({
-                avatar_id: avatar_id,
-                voice_id: voice_id,
-                input_text: script,
+                avatar_id,
+                voice_id,
+                script: script,
             }),
         });
 
